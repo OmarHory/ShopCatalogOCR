@@ -1,3 +1,4 @@
 Datasets/
 *.jpg
 yolov5/
+ocr/__pycache__/
