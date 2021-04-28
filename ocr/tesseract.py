@@ -1,12 +1,13 @@
 import cv2
 import pytesseract
 from matplotlib import pyplot as plt
-from detect_text import detect
+from detect_text import TextDetection
 
 class Tesseract(object):
 	def __init__(self, image, model):
 		self.image = image
 		self.model = model
+		self.text_detection = TextDetection(source=self.image, weights=self.model, img_size=1024)
 
 	def inference(self):
 		image = cv2.imread(self.image)
@@ -14,7 +15,7 @@ class Tesseract(object):
 		print(image.shape[:2])
 		(H, W) = image.shape[:2]
 
-		boxes = detect(source=self.image, weights=self.model, img_size=1024)
+		boxes = self.text_detection.detect()
 
 		results = []
 
