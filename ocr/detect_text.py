@@ -11,7 +11,7 @@ from utils.general import  non_max_suppression, apply_classifier,scale_coords, x
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 
-def detect(source, weights, img_size, device_loc='cpu', augment=True ,conf_thres=0.25, iou=0.45, classes=0, agnostic_nms=True):
+def detect(source, weights, img_size, device_loc='cpu', augment=False ,conf_thres=0.25, iou=0.45, classes=None, agnostic_nms=False):
     source, weights= source, weights
     set_logging()
     device = select_device(device_loc)
@@ -79,7 +79,7 @@ def detect(source, weights, img_size, device_loc='cpu', augment=True ,conf_thres
                 for *xyxy, _, _ in reversed(det):
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                     results.append(xywh)
-    print(results)
+    return results
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

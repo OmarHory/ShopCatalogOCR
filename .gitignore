@@ -1,3 +1,3 @@
-# exclude Dataset directory
 Datasets/
 *.jpg
+yolov5/

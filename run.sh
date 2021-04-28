@@ -1,1 +1,1 @@
-python3 ocr/detect_text.py --weights ocr/best.pt --source price-1.jpg --save-txt
+python3 ocr/tesseract.py -m ocr/best.pt -i price-1.jpg
