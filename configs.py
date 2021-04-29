@@ -1,11 +1,11 @@
 import os
-#TODO: Support environment variables
+
+# TODO: Support environment variables
 
 config = dict(
-    text_detection_model = 'ocr/best.pt',
-    img_size = 640,
-    allowed_extensions = ['jpg', 'png'],
-    max_image_size = 5 * 1024 * 1024,
-    debug= True,
-
+    text_detection_model="ocr/best.pt",
+    img_size=640,
+    allowed_extensions=["jpg", "png"],
+    max_image_size=5 * 1024 * 1024,
+    debug=True,
 )
