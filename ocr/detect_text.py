@@ -1,20 +1,13 @@
-import argparse
-import time
 from pathlib import Path
-
 import torch
-from numpy import random
-
-from models.experimental import attempt_load
-from utils.datasets import LoadImages
-from utils.general import  non_max_suppression, apply_classifier,scale_coords, xyxy2xywh, set_logging
-from utils.torch_utils import select_device, load_classifier, time_synchronized
+from ocr.models.experimental import attempt_load
+from ocr.utils.datasets import LoadImages
+from ocr.utils.general import  non_max_suppression, apply_classifier,scale_coords, xyxy2xywh, set_logging
+from ocr.utils.torch_utils import select_device, load_classifier, time_synchronized
 
 class TextDetection(object):
-    def __init__(self, source, weights, img_size, device_loc='cpu', augment=False ,conf_thres=0.25, iou=0.45, classes=None, agnostic_nms=False):
-        self.source = source
+    def __init__(self, weights, device_loc='cpu', augment=False ,conf_thres=0.25, iou=0.45, classes=None, agnostic_nms=False):
         self.weights = weights
-        self.img_size = img_size
         self.device_loc = device_loc
         self.augment = augment
         self.conf_thres = conf_thres
@@ -23,8 +16,8 @@ class TextDetection(object):
         self.agnostic_nms =agnostic_nms 
 
 
-    def detect(self):
-        source, weights= self.source, self.weights
+    def detect(self, source, img_size=640):
+        source, weights= source, self.weights
         set_logging()
         device = select_device(self.device_loc)
         half = device.type != 'cpu'  # half precision only supported on CUDA
@@ -41,14 +34,14 @@ class TextDetection(object):
             modelc = load_classifier(name='resnet101', n=2)  # initialize
             modelc.load_state_dict(torch.load('weights/resnet101.pt', map_location=device)['model']).to(device).eval()
 
-        dataset = LoadImages(source, img_size=self.img_size, stride=stride)
+        dataset = LoadImages(source, img_size=img_size, stride=stride)
 
         # Get names and colors
         names = model.module.names if hasattr(model, 'module') else model.names
 
         # Run inference
         if device.type != 'cpu':
-            model(torch.zeros(1, 3, self.img_size, self.img_size).to(device).type_as(next(model.parameters())))  # run once
+            model(torch.zeros(1, 3, img_size, img_size).to(device).type_as(next(model.parameters())))  # run once
         for path, img, im0s, vid_cap in dataset:
             img = torch.from_numpy(img).to(device)
             img = img.half() if half else img.float()  # uint8 to fp16/32

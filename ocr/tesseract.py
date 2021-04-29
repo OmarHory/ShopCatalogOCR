@@ -1,21 +1,14 @@
 import cv2
 import pytesseract
 from matplotlib import pyplot as plt
-from detect_text import TextDetection
 
 class Tesseract(object):
-	def __init__(self, image, model):
-		self.image = image
-		self.model = model
-		self.text_detection = TextDetection(source=self.image, weights=self.model, img_size=1024)
+	def __init__(self):
+    		pass
 
-	def inference(self):
-		image = cv2.imread(self.image)
+	def inference(self, image, boxes):
 		orig = image.copy()
-		print(image.shape[:2])
 		(H, W) = image.shape[:2]
-
-		boxes = self.text_detection.detect()
 
 		results = []
 
@@ -31,7 +24,7 @@ class Tesseract(object):
 			endY = int(centerY + (boxH/2))
 
 			r = orig[startY:endY, startX:endX]
-			configuration = ("-l eng --oem 1 --psm 11")
+			configuration = ("-l ara --oem 1 --psm 11")
 			text = pytesseract.image_to_string(r, config=configuration)
 			results.append(((startX, startY, endX, endY), text))
 
@@ -39,10 +32,7 @@ class Tesseract(object):
 
 		# Moving over the results and display on the image
 		for ((start_X, start_Y, end_X, end_Y), text) in results:
-			# display the text detected by Tesseract
-			print("{}\n".format(text))
 
-			# Displaying text
 			text = "".join([x if ord(x) < 128 else "" for x in text]).strip()
 			cv2.rectangle(orig_image, (start_X, start_Y), (end_X, end_Y),
 				(0, 0, 255), 2)
