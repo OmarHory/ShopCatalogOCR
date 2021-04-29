@@ -54,7 +54,6 @@ class TextDetection(object):
 
             # Apply NMS
             pred = non_max_suppression(pred, self.conf_thres, self.iou, classes=self.classes, agnostic=self.agnostic_nms)
-            t2 = time_synchronized()
 
             # Apply Classifier
             if classify:

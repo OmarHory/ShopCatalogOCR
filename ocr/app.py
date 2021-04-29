@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask, request, flash, jsonify
 from werkzeug.utils import secure_filename
 from ocr.tesseract import Tesseract
@@ -11,7 +13,9 @@ obj = Tesseract()
 # The initiation of the flask app.
 app= Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = config['max_image_size'] #16 MB Max Size.
-app.debug = True
+app.debug = config['debug']
+app.secret_key = os.urandom(24)
+
 
 #Check for allowed extensions
 def allowed_file(filename):
@@ -46,6 +50,5 @@ def test_prediction(image):
     boxes = text_detection.detect(source=image, img_size=config['img_size'])
     return obj.inference(image=cv2.imread(image), boxes=boxes)
             
-app.secret_key = os.urandom(24)
 if __name__=="__main__":
     app.run()

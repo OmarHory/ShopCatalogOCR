@@ -6,5 +6,6 @@ config = dict(
     img_size = 640,
     allowed_extensions = ['jpg', 'png'],
     max_image_size = 5 * 1024 * 1024,
+    debug= True,
 
 )
