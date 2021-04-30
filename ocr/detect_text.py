@@ -9,7 +9,7 @@ from ocr.utils.general import (
     xyxy2xywh,
     set_logging,
 )
-from ocr.utils.torch_utils import select_device, load_classifier, time_synchronized
+from ocr.utils.torch_utils import select_device, load_classifier
 
 
 class TextDetection(object):

@@ -67,7 +67,6 @@ def upload_file():
             422,
         )
 
-
 def test_prediction(image):
     boxes = text_detection.detect(source=image, img_size=config["img_size"])
     return obj.inference(image=cv2.imread(image), boxes=boxes)
