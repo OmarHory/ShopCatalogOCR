@@ -25,7 +25,7 @@ class Tesseract(object):
             endY = int(centerY + (boxH / 2))
 
             r = orig[startY:endY, startX:endX]
-            configuration = "-l ara --oem 1 --psm 11"
+            configuration = "-l eng --oem 1 --psm 11"
             text = pytesseract.image_to_string(r, config=configuration)
             results.append(((startX, startY, endX, endY), text))
 
@@ -37,15 +37,6 @@ class Tesseract(object):
             text = "".join([x if ord(x) < 128 else "" for x in text]).strip()
             cv2.rectangle(
                 orig_image, (start_X, start_Y), (end_X, end_Y), (0, 0, 255), 2
-            )
-            cv2.putText(
-                orig_image,
-                "",
-                (start_X, start_Y - 30),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                (0, 0, 255),
-                2,
             )
 
         plt.imshow(orig_image)
