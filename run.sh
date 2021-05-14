@@ -1,1 +1,1 @@
-python3 ocr/app.py
+python ocr/manage.py runserver

@@ -3,8 +3,8 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask, request, flash, jsonify
 from werkzeug.utils import secure_filename
-from ocr.tesseract import Tesseract
-from ocr.detect_text import TextDetection
+from ocr.externals.tesseract import Tesseract
+from ocr.externals.detect_text import TextDetection
 from configs import config
 import cv2
 
