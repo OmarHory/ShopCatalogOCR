@@ -22,4 +22,6 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('', views.index),
     path('inference', views.inference),
+    path('inference_bulk', views.inference_bulk),
+    
 ]
