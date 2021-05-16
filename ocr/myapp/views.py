@@ -46,5 +46,5 @@ def inference_bulk(request):
                 image_name = os.path.basename(image_url)
                 response[image_name] = obj.inference(image=cv2.imread(image_url), boxes=boxes)
             except:
-                response[image_name] = json.dumps([{ 'Error': 'Could not infer.'}])
+                response[image_name] = 'Error : Could not infer.'
     return HttpResponse(json.dumps([response]), content_type='text/json')
